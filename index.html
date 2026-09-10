@@ -11,6 +11,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
 h1{font-size:28px;font-weight:700;margin-bottom:6px}
 h2{font-size:20px;font-weight:660;margin:28px 0 10px;color:var(--cyan)}
+h3{font-size:17px;font-weight:640;margin:24px 0 8px;color:var(--amber)}
 .sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:16px}
 .card-q{border-left:3px solid var(--cyan)}
@@ -29,6 +30,7 @@ img.frame{width:100%;max-width:480px;border-radius:8px;border:1px solid var(--li
 .tut-img{width:100%;height:120px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
 figcaption{font-size:11px;color:var(--dim);margin-top:4px}
 hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+.domain-header{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:20px;border-left:3px solid var(--amber)}
 @media(max-width:700px){.grid3{grid-template-columns:1fr}}
 </style>
 </head>
@@ -37,21 +39,24 @@ hr{border:none;border-top:1px solid var(--line);margin:32px 0}
 
 <h1>self-improve-bench</h1>
 <p class="sub">Visual Predict Benchmark &mdash; questions that require watching tutorial videos to answer correctly.<br>
-Domain: pottery &middot; Target: Florian Gadsby pottery bowl (14 min, ASMR, no narration) &middot; Tutorials: 6 silent videos from 5 creators</p>
+All tutorial videos are silent (no narration). All videos are muted during evaluation.</p>
 
-<!-- Tutorial gallery -->
-<h2>Tutorial Videos</h2>
-<div class="grid3">
-<figure><img class="tut-img" src="assets/tut_nougat_bowl.jpg" alt="Nougat bowl"><figcaption>Nougat &mdash; Throwing + trimming a shallow bowl</figcaption></figure>
-<figure><img class="tut-img" src="assets/tut_tagir_trimming.jpg" alt="Tagir trimming"><figcaption>Tagir Clay &mdash; Trimming a clay vase</figcaption></figure>
-<figure><img class="tut-img" src="assets/tut_oyu_teacup.jpg" alt="OYU teacup"><figcaption>OYU Ceramics &mdash; 100g to perfect teacup</figcaption></figure>
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Domain 1 &mdash; Pottery</h2>
+
+<div class="domain-header">
+<p><strong>Target:</strong> Florian Gadsby &mdash; Throwing and Turning a Pottery Bowl (14 min, ASMR, no narration)</p>
+<p class="dim">Tutorials: 6 silent videos from 5 creators (Florian Gadsby, Tagir Clay, OYU Ceramics, NowWhat, Nougat)</p>
 </div>
-<p class="dim" style="margin-top:8px">+ Florian Gadsby teapot ASMR (23 min) + Florian Gadsby trimming ASMR (16 min) + NowWhat plates trimming (7 min)</p>
 
-<hr>
+<div class="grid3">
+<figure><img class="tut-img" src="assets/tut_nougat_bowl.jpg" alt="Nougat bowl"><figcaption>Nougat &mdash; Throwing + trimming bowl</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_tagir_trimming.jpg" alt="Tagir trimming"><figcaption>Tagir Clay &mdash; Trimming a vase</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_oyu_teacup.jpg" alt="OYU teacup"><figcaption>OYU Ceramics &mdash; 100g to teacup</figcaption></figure>
+</div>
 
-<!-- ═══════ Question 1 ═══════ -->
-<h2>Question 1 &mdash; t = 360s</h2>
+<!-- Pottery Q1 -->
+<h3>Pottery Q1 &mdash; t = 360s</h3>
 <img class="frame" src="assets/pv_q001_360s.jpg" alt="360s">
 
 <div class="card card-q">
@@ -67,14 +72,12 @@ Domain: pottery &middot; Target: Florian Gadsby pottery bowl (14 min, ASMR, no n
 <div class="card card-rule">
 <div class="label label-rule">Scoring Elements</div>
 <p><span class="tag tag-green">CORE</span> tool_type: ring/loop trimming tool &middot; action: trim the outer side</p>
-<p><span class="tag tag-amber">BONUS</span> stabilization: press base to steady &middot; consistent_angle: hold tool at fixed angle</p>
-<p><span class="tag tag-dim">IGNORED</span> direction: outer→inner vs inner→outer &middot; order: side first vs bottom first</p>
+<p><span class="tag tag-amber">BONUS</span> stabilization &middot; consistent_angle</p>
+<p><span class="tag tag-dim">IGNORED</span> direction &middot; order</p>
 </div>
 
-<hr>
-
-<!-- ═══════ Question 2 ═══════ -->
-<h2>Question 2 &mdash; t = 515s</h2>
+<!-- Pottery Q2 -->
+<h3>Pottery Q2 &mdash; t = 515s</h3>
 <img class="frame" src="assets/pv_q002_515s.jpg" alt="515s">
 
 <div class="card card-q">
@@ -91,11 +94,43 @@ Domain: pottery &middot; Target: Florian Gadsby pottery bowl (14 min, ASMR, no n
 <div class="label label-rule">Scoring Elements</div>
 <p><span class="tag tag-green">CORE</span> tool_type: small metal tool &middot; action: trim/carve &middot; target: inner edge of foot ring</p>
 <p><span class="tag tag-amber">BONUS</span> consistent_angle &middot; gradual_movement</p>
-<p><span class="tag tag-dim">IGNORED</span> direction: outer→inner vs inner→outer &middot; hand_position</p>
+<p><span class="tag tag-dim">IGNORED</span> direction &middot; hand_position</p>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Domain 2 &mdash; Knife Sharpening</h2>
+
+<div class="domain-header">
+<p><strong>Target:</strong> ArtTema &mdash; Budget Sharpening with Toohr 5 + Diamond Stones (10 min)</p>
+<p class="dim">Tutorials: 4 videos (Phil Woodhull ASMR, POV Beginner Guide, ArtTema Hapstone, ArtTema KosiM). All silent or minimal narration.</p>
+</div>
+
+<!-- Sharpening Q1 -->
+<h3>Sharpening Q1 &mdash; t = 182s</h3>
+<img class="frame" src="assets/sh_q001_182s.jpg" alt="182s">
+
+<div class="card card-q">
+<div class="label label-q">Question</div>
+<p>You are at the knife sharpening setup, hand moving toward the blade. <strong>What do you do next?</strong></p>
+</div>
+
+<div class="card card-a">
+<div class="label label-a">Answer</div>
+<p>Pick up the 1000# sharpening stone from the table.</p>
+</div>
+
+<div class="card card-rule">
+<div class="label label-rule">Scoring Elements</div>
+<p><span class="tag tag-green">CORE</span> pick_up_stone: pick up the sharpening stone</p>
+<p><span class="tag tag-amber">BONUS</span> specific_stone: 1000# grit stone specifically</p>
+<p><span class="tag tag-dim">IGNORED</span> install_stone: how to mount/install the stone on the jig</p>
+<p class="dim" style="margin-top:8px">Matching tutorial: tut_arttema_asmr (only one tutorial matched this specific setup)</p>
 </div>
 
 <div style="text-align:center;padding:32px 0 0;color:var(--dim);font-size:12px">
-self-improve-bench &middot; pottery domain &middot; 2 questions &middot; run08
+self-improve-bench &middot; 2 domains &middot; 3 questions &middot; pottery run08 + sharpening run02
 </div>
 
 </div>

@@ -11,6 +11,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
 h1{font-size:28px;font-weight:700;margin-bottom:6px}
 h2{font-size:20px;font-weight:660;margin:28px 0 10px;color:var(--cyan)}
+h3{font-size:17px;font-weight:640;margin:24px 0 8px;color:var(--amber)}
 .sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:16px}
 .card-q{border-left:3px solid var(--cyan)}
@@ -29,6 +30,7 @@ img.frame{width:100%;max-width:480px;border-radius:8px;border:1px solid var(--li
 .tut-img{width:100%;height:120px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
 figcaption{font-size:11px;color:var(--dim);margin-top:4px}
 hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+.domain-header{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:20px;border-left:3px solid var(--amber)}
 @media(max-width:700px){.grid3{grid-template-columns:1fr}}
 </style>
 </head>
@@ -37,65 +39,81 @@ hr{border:none;border-top:1px solid var(--line);margin:32px 0}
 
 <h1>self-improve-bench</h1>
 <p class="sub">Visual Predict Benchmark &mdash; questions that require watching tutorial videos to answer correctly.<br>
-Domain: pottery &middot; Target: Florian Gadsby pottery bowl (14 min, ASMR, no narration) &middot; Tutorials: 6 silent videos from 5 creators</p>
+All tutorial videos are silent or muted. All videos are muted during evaluation.<br>
+2 domains &middot; 4 questions</p>
 
-<!-- Tutorial gallery -->
-<h2>Tutorial Videos</h2>
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Domain 1 &mdash; Pottery</h2>
+
+<div class="domain-header">
+<p><strong>Target:</strong> Florian Gadsby &mdash; Throwing and Turning a Pottery Bowl (14 min, ASMR, no narration)</p>
+<p class="dim">Tutorials: 6 silent videos from 5 creators &middot; 2 questions</p>
+</div>
+
 <div class="grid3">
-<figure><img class="tut-img" src="assets/tut_nougat_bowl.jpg" alt="Nougat bowl"><figcaption>Nougat &mdash; Throwing + trimming a shallow bowl</figcaption></figure>
-<figure><img class="tut-img" src="assets/tut_tagir_trimming.jpg" alt="Tagir trimming"><figcaption>Tagir Clay &mdash; Trimming a clay vase</figcaption></figure>
-<figure><img class="tut-img" src="assets/tut_oyu_teacup.jpg" alt="OYU teacup"><figcaption>OYU Ceramics &mdash; 100g to perfect teacup</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_nougat_bowl.jpg" alt=""><figcaption>Nougat &mdash; Throwing + trimming bowl</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_tagir_trimming.jpg" alt=""><figcaption>Tagir Clay &mdash; Trimming a vase</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_oyu_teacup.jpg" alt=""><figcaption>OYU Ceramics &mdash; 100g to teacup</figcaption></figure>
 </div>
-<p class="dim" style="margin-top:8px">+ Florian Gadsby teapot ASMR (23 min) + Florian Gadsby trimming ASMR (16 min) + NowWhat plates trimming (7 min)</p>
 
-<hr>
-
-<!-- ═══════ Question 1 ═══════ -->
-<h2>Question 1 &mdash; t = 360s</h2>
+<h3>Pottery Q1 &mdash; t = 360s</h3>
 <img class="frame" src="assets/pv_q001_360s.jpg" alt="360s">
-
-<div class="card card-q">
-<div class="label label-q">Question</div>
-<p>You are trimming an upside-down clay bowl on the wheel, steadying it with one hand. <strong>What do you do next?</strong></p>
-</div>
-
-<div class="card card-a">
-<div class="label label-a">Answer</div>
-<p>Use a ring-shaped trimming tool to trim the outer side of the upside-down clay bowl, shaving off excess clay.</p>
-</div>
-
-<div class="card card-rule">
-<div class="label label-rule">Scoring Elements</div>
+<div class="card card-q"><div class="label label-q">Question</div>
+<p>You are trimming an upside-down clay bowl on the wheel, steadying it with one hand. <strong>What do you do next?</strong></p></div>
+<div class="card card-a"><div class="label label-a">Answer</div>
+<p>Use a ring-shaped trimming tool to trim the outer side of the upside-down clay bowl, shaving off excess clay.</p></div>
+<div class="card card-rule"><div class="label label-rule">Scoring Elements</div>
 <p><span class="tag tag-green">CORE</span> tool_type: ring/loop trimming tool &middot; action: trim the outer side</p>
-<p><span class="tag tag-amber">BONUS</span> stabilization: press base to steady &middot; consistent_angle: hold tool at fixed angle</p>
-<p><span class="tag tag-dim">IGNORED</span> direction: outer→inner vs inner→outer &middot; order: side first vs bottom first</p>
-</div>
+<p><span class="tag tag-amber">BONUS</span> stabilization &middot; consistent_angle</p>
+<p><span class="tag tag-dim">IGNORED</span> direction &middot; order</p></div>
 
-<hr>
-
-<!-- ═══════ Question 2 ═══════ -->
-<h2>Question 2 &mdash; t = 515s</h2>
+<h3>Pottery Q2 &mdash; t = 515s</h3>
 <img class="frame" src="assets/pv_q002_515s.jpg" alt="515s">
-
-<div class="card card-q">
-<div class="label label-q">Question</div>
-<p>You are carving a circular indentation into the center of a spinning clay bowl. <strong>What do you do next?</strong></p>
-</div>
-
-<div class="card card-a">
-<div class="label label-a">Answer</div>
-<p>Use a small metal tool to trim the inner edge of the foot ring of the clay bowl.</p>
-</div>
-
-<div class="card card-rule">
-<div class="label label-rule">Scoring Elements</div>
+<div class="card card-q"><div class="label label-q">Question</div>
+<p>You are carving a circular indentation into the center of a spinning clay bowl. <strong>What do you do next?</strong></p></div>
+<div class="card card-a"><div class="label label-a">Answer</div>
+<p>Use a small metal tool to trim the inner edge of the foot ring of the clay bowl.</p></div>
+<div class="card card-rule"><div class="label label-rule">Scoring Elements</div>
 <p><span class="tag tag-green">CORE</span> tool_type: small metal tool &middot; action: trim/carve &middot; target: inner edge of foot ring</p>
 <p><span class="tag tag-amber">BONUS</span> consistent_angle &middot; gradual_movement</p>
-<p><span class="tag tag-dim">IGNORED</span> direction: outer→inner vs inner→outer &middot; hand_position</p>
+<p><span class="tag tag-dim">IGNORED</span> direction &middot; hand_position</p></div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>Domain 2 &mdash; Leather Crafting</h2>
+
+<div class="domain-header">
+<p><strong>Target:</strong> Your First Leather Project &mdash; Easy Leather Cardholder (8 min)</p>
+<p class="dim">Tutorials: 4 videos (MAKESUPPLY, Bifold Card Case, Babylon Leather, Beginner Cardholder) &middot; 2 questions</p>
 </div>
 
+<h3>Leather Q1 &mdash; t = 300s</h3>
+<img class="frame" src="assets/lc_q001_300s.jpg" alt="300s">
+<div class="card card-q"><div class="label label-q">Question</div>
+<p>You are using a hand-operated press on a leather piece. <strong>What do you do next?</strong></p></div>
+<div class="card card-a"><div class="label label-a">Answer</div>
+<p>Use saddle stitch to sew the leather pieces together by passing two needles through the pre-punched holes, pulling the thread tight after each stitch.</p></div>
+<div class="card card-rule"><div class="label label-rule">Scoring Elements</div>
+<p><span class="tag tag-green">CORE</span> saddle_stitch: use saddle stitch technique (two needles, crossing through holes)</p>
+<p><span class="tag tag-amber">BONUS</span> pull_thread_tight: pull thread tight after each stitch</p>
+<p><span class="tag tag-dim">IGNORED</span> specific_stitch_count</p>
+<p class="dim" style="margin-top:6px">Why this needs tutorials: a beginner would guess "sew it" but wouldn't know to use the specific <em>saddle stitch</em> technique (two needles crossing through each hole), which is the standard for leather work and what all tutorials teach.</p></div>
+
+<h3>Leather Q2 &mdash; t = 326s</h3>
+<img class="frame" src="assets/lc_q002_326s.jpg" alt="326s">
+<div class="card card-q"><div class="label label-q">Question</div>
+<p>You are stitching a leather piece to a wooden block, pulling the needle through. <strong>What do you do next?</strong></p></div>
+<div class="card card-a"><div class="label label-a">Answer</div>
+<p>Trim the excess thread to a short length, then melt the ends with a lighter to finish them.</p></div>
+<div class="card card-rule"><div class="label label-rule">Scoring Elements</div>
+<p><span class="tag tag-green">CORE</span> trim_thread: trim excess thread &middot; melt_ends: melt thread ends with a flame to seal</p>
+<p><span class="tag tag-amber">BONUS</span> length_3mm: leave ~3mm of thread before melting</p>
+<p><span class="tag tag-dim">IGNORED</span> flame_distance</p>
+<p class="dim" style="margin-top:6px">Why this needs tutorials: a beginner might continue stitching or just cut the thread. The correct finishing technique is to trim short and <em>melt-seal</em> the ends with a lighter, which prevents unraveling — learned from watching tutorials.</p></div>
+
 <div style="text-align:center;padding:32px 0 0;color:var(--dim);font-size:12px">
-self-improve-bench &middot; pottery domain &middot; 2 questions &middot; run08
+self-improve-bench &middot; 2 domains &middot; 4 questions &middot; pottery run08 + leather run01
 </div>
 
 </div>

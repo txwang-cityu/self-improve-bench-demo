@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>self-improve-bench · Visual Predict Demo</title>
+<style>
+:root{--bg:#0d1117;--panel:#161d26;--text:#e6edf3;--muted:#8b949e;--dim:#6b7480;--line:#242d38;--amber:#f0a94a;--cyan:#5ec8d8;--red:#f0736a;--green:#7ec97e;--violet:#a98cf0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+h1{font-size:28px;font-weight:700;margin-bottom:6px}
+h2{font-size:20px;font-weight:660;margin:28px 0 10px;color:var(--cyan)}
+h3{font-size:16px;font-weight:640;margin:20px 0 8px}
+.sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:16px}
+.card-q{border-left:3px solid var(--cyan)}
+.card-a{border-left:3px solid var(--green)}
+.card-a0{border-left:3px solid var(--red)}
+.card-rule{border-left:3px solid var(--amber)}
+.card-tut{border-left:3px solid var(--violet)}
+.label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.label-q{color:var(--cyan)}.label-a{color:var(--green)}.label-a0{color:var(--red)}.label-rule{color:var(--amber)}.label-tut{color:var(--violet)}
+p{font-size:14px;color:var(--text);margin-bottom:8px}
+.dim{color:var(--dim);font-size:13px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}
+.tag-green{background:rgba(126,201,126,.12);color:var(--green);border:1px solid rgba(126,201,126,.25)}
+.tag-red{background:rgba(240,106,106,.1);color:var(--red);border:1px solid rgba(240,106,106,.25)}
+.tag-amber{background:rgba(240,169,74,.1);color:var(--amber);border:1px solid rgba(240,169,74,.25)}
+img.frame{width:100%;max-width:480px;border-radius:8px;border:1px solid var(--line);display:block;margin:8px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.tut-img{width:100%;height:120px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+figcaption{font-size:11px;color:var(--dim);margin-top:4px}
+.note{font-size:12.5px;color:var(--dim);border-left:2px solid var(--line);padding-left:12px;margin:12px 0}
+.score{font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:15px}
+hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>self-improve-bench</h1>
+<p class="sub">Visual Predict Demo &mdash; Can a model learn techniques from tutorial videos and apply them to a new situation?</p>
+
+<div class="card">
+<p><strong>Setup:</strong> You are making a pottery bowl. You have watched tutorial videos (silent) that teach pottery techniques. Now your video stops at a moment during the work. Based on what you see and what you learned from the tutorials &mdash; what do you do next?</p>
+<p class="dim">Target: Florian Gadsby &mdash; Throwing and Turning a Pottery Bowl (14 min, ASMR, no narration)<br>
+Tutorials: 6 videos from 5 different channels (all silent/ASMR), covering centering, throwing, trimming</p>
+</div>
+
+<!-- Results summary -->
+<div class="card" style="border-left:3px solid var(--green)">
+<div class="label label-a">Results (run05 &middot; soft scoring)</div>
+<p><span class="score" style="color:var(--red)">A1 avg 0.17</span> &nbsp;&rarr;&nbsp; <span class="score" style="color:var(--green)">A3 avg 0.56</span> &nbsp;&nbsp; <span class="score" style="color:var(--green)">gap +0.39</span></p>
+<p class="dim">A1 = target video only (muted) &middot; A3 = target + 6 tutorial videos (all muted) &middot; 4 questions, three-tier soft scoring</p>
+</div>
+
+<!-- Scoring explainer -->
+<div class="card" style="border-left:3px solid var(--amber)">
+<div class="label label-rule">Three-tier Soft Scoring</div>
+<p class="dim"><span class="tag tag-green">CORE</span> All tutorials agree &mdash; must answer correctly (0.7 weight) &nbsp;
+<span class="tag tag-amber">BONUS</span> Some tutorials teach, none contradict &mdash; extra credit (0.3 weight) &nbsp;
+<span class="tag" style="background:rgba(100,110,130,.1);color:var(--dim);border:1px solid rgba(100,110,130,.25)">IGNORED</span> Tutorials disagree &mdash; not scored at all</p>
+<p class="dim">Example: "trim outer side" = CORE &middot; "consistent angle" = BONUS &middot; "outer-to-inner vs inner-to-outer" = IGNORED</p>
+</div>
+
+<!-- Tutorial gallery -->
+<h2>Tutorial Videos (what you watched before starting)</h2>
+<div class="grid3">
+<figure><img class="tut-img" src="assets/tut_nougat_bowl.jpg" alt="Nougat bowl"><figcaption>Nougat &mdash; Throwing + trimming a shallow bowl</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_tagir_trimming.jpg" alt="Tagir trimming"><figcaption>Tagir Clay &mdash; Trimming a clay vase</figcaption></figure>
+<figure><img class="tut-img" src="assets/tut_oyu_teacup.jpg" alt="OYU teacup"><figcaption>OYU Ceramics &mdash; 100g to perfect teacup</figcaption></figure>
+</div>
+<p class="dim" style="margin-top:8px">+ Florian Gadsby teapot ASMR (23 min) + Florian Gadsby trimming ASMR (16 min) + NowWhat plates trimming (7 min)</p>
+
+<hr>
+
+<!-- ═══════ Question 1 ═══════ -->
+<h2>Question 1 &mdash; t = 360s &nbsp; <span class="score" style="color:var(--green)">gap +0.70</span></h2>
+<img class="frame" src="assets/pv_q001_360s.jpg" alt="360s — inverted bowl on wheel">
+<p class="dim">What you see at t=360s: an upside-down clay bowl on the spinning wheel, one hand steadying it.</p>
+
+<div class="card card-q">
+<div class="label label-q">Question</div>
+<p>You are trimming an upside-down clay bowl on the wheel, steadying it with one hand. <strong>What do you do next?</strong></p>
+</div>
+
+<div class="card card-a">
+<div class="label label-a">Ground Truth &middot; <span class="tag tag-green">CORE: tool_type + action</span></div>
+<p>Use a ring-shaped trimming tool to trim the outer side of the upside-down clay bowl, shaving off excess clay in long strips.</p>
+<p class="dim">BONUS: stabilization, consistent_angle &middot; IGNORED: direction, order</p>
+</div>
+
+<div class="grid2">
+<div class="card card-a0">
+<div class="label label-a0">A1 &middot; Target video only <span class="tag tag-red">0.00</span></div>
+<p>"Pick up a loop trimming tool and carve a foot ring into the flat base."</p>
+<p class="dim">Too vague &mdash; said "carve foot ring" but didn't specify the outer side. Missed both core elements.</p>
+</div>
+<div class="card" style="border-left:3px solid var(--green)">
+<div class="label label-a">A3 &middot; Target + tutorials <span class="tag tag-green">0.70</span></div>
+<p>"Use a wire loop trimming tool against the spinning bowl's outside wall to carve away excess clay and define the foot ring."</p>
+<p class="dim">Referenced tutorial 03 &middot; correctly identified "outside wall" &middot; both core elements hit.</p>
+</div>
+</div>
+
+<hr>
+
+<!-- ═══════ Question 2 ═══════ -->
+<h2>Question 2 &mdash; t = 395s &nbsp; <span class="score" style="color:var(--green)">gap +0.15</span></h2>
+<img class="frame" src="assets/pv_q002_395s.jpg" alt="395s — rough base">
+<p class="dim">What you see at t=395s: carving a clay bowl on a spinning wheel, rough base and side visible.</p>
+
+<div class="card card-q">
+<div class="label label-q">Question</div>
+<p>You are carving a clay bowl on a spinning wheel. The bowl has a rough base and side. <strong>What do you do next?</strong></p>
+</div>
+
+<div class="card card-a">
+<div class="label label-a">Ground Truth &middot; <span class="tag tag-green">CORE: tool_type + action</span></div>
+<p>Use a metal trimming tool to carve a groove into the base of the bowl.</p>
+<p class="dim">BONUS: stabilize_with_left_hand, wheel_spinning &middot; IGNORED: direction_of_carving, angle_of_tool</p>
+</div>
+
+<div class="grid2">
+<div class="card" style="border-left:3px solid var(--amber)">
+<div class="label" style="color:var(--amber)">A1 &middot; Target video only <span class="tag tag-amber">0.70</span></div>
+<p>"Use a loop trimming tool to carve excess clay from the inverted bowl's base on the spinning wheel, forming the foot ring."</p>
+<p class="dim">Tool type and action both correct &mdash; both core elements hit.</p>
+</div>
+<div class="card" style="border-left:3px solid var(--green)">
+<div class="label label-a">A3 &middot; Target + tutorials <span class="tag tag-green">0.85</span></div>
+<p>"Use a loop trimming tool to carve the inverted bowl's thick base on the spinning wheel, shaping the foot ring."</p>
+<p class="dim">Both core elements + bonus: wheel_spinning.</p>
+</div>
+</div>
+
+<hr>
+
+<!-- ═══════ Question 3 ═══════ -->
+<h2>Question 3 &mdash; t = 435s &nbsp; <span class="score" style="color:var(--dim)">gap 0.00</span></h2>
+<img class="frame" src="assets/pv_q003_435s.jpg" alt="435s — curled shavings">
+<p class="dim">What you see at t=435s: the base has been trimmed, curled clay shavings around the bowl.</p>
+
+<div class="card card-q">
+<div class="label label-q">Question</div>
+<p>You've just trimmed the base of the upside-down bowl, leaving curled clay shavings. <strong>What do you do next?</strong></p>
+</div>
+
+<div class="card card-a">
+<div class="label label-a">Ground Truth &middot; <span class="tag tag-green">CORE: tool_type + action + location</span></div>
+<p>Use a metal trimming tool to carve a spiral groove on the bottom of the rotating bowl, moving from the outer edge toward the center.</p>
+<p class="dim">BONUS: direction, steadying &middot; IGNORED: spiral_direction, depth</p>
+</div>
+
+<div class="grid2">
+<div class="card card-a0">
+<div class="label label-a0">A1 &middot; Target video only <span class="tag tag-red">0.00</span></div>
+<p>"Clear the clay shavings away, then smooth the trimmed foot ring with a damp sponge while the wheel spins slowly."</p>
+<p class="dim">Completely wrong &mdash; thought trimming was done, guessed the finishing step instead of spiral carving.</p>
+</div>
+<div class="card card-a0">
+<div class="label label-a0">A3 &middot; Target + tutorials <span class="tag tag-red">0.00</span></div>
+<p>"Use a damp sponge on the spinning wheel to smooth the trimmed foot ring and base, softening sharp edges."</p>
+<p class="dim">Tutorials didn't help &mdash; spiral carving technique not prominent enough in the 6 tutorials for the model to pick it up.</p>
+</div>
+</div>
+
+<div class="note">Both A1 and A3 answered "smooth with sponge" &mdash; they assumed trimming was complete. The spiral groove is a decorative/functional technique (allows drying airflow under the bowl) that must be <em>seen</em> in a tutorial to know about. This question is either too hard or the tutorials don't demonstrate it clearly enough.</div>
+
+<hr>
+
+<!-- ═══════ Question 4 ═══════ -->
+<h2>Question 4 &mdash; t = 476s &nbsp; <span class="score" style="color:var(--green)">gap +0.70</span></h2>
+<img class="frame" src="assets/pv_q004_476s.jpg" alt="476s — flat base">
+<p class="dim">What you see at t=476s: the base of the upside-down bowl on a spinning wheel, being trimmed.</p>
+
+<div class="card card-q">
+<div class="label label-q">Question</div>
+<p>You are trimming the base of an upside-down clay bowl on a spinning wheel. <strong>What do you do next?</strong></p>
+</div>
+
+<div class="card card-a">
+<div class="label label-a">Ground Truth &middot; <span class="tag tag-green">CORE: tool + action</span></div>
+<p>Use a loop tool to carve concentric grooves into the flat top of the clay form.</p>
+<p class="dim">BONUS: angle, direction &middot; IGNORED: direction (inner→outer vs outer→inner)</p>
+</div>
+
+<div class="grid2">
+<div class="card card-a0">
+<div class="label label-a0">A1 &middot; Target video only <span class="tag tag-red">0.00</span></div>
+<p>"Use the loop trimming tool to hollow out the center inside the foot ring, carving away excess clay."</p>
+<p class="dim">Said "hollow out" &mdash; too vague, didn't mention concentric grooves (the specific technique).</p>
+</div>
+<div class="card" style="border-left:3px solid var(--green)">
+<div class="label label-a">A3 &middot; Target + tutorials <span class="tag tag-green">0.70</span></div>
+<p>"Use the loop trimming tool to hollow out clay inside the foot ring, carving concentric passes from the center outward."</p>
+<p class="dim">Referenced tutorial_06 + tutorial_01 &middot; "concentric passes" matched the core action element.</p>
+</div>
+</div>
+
+<hr>
+
+<!-- ═══════ Summary ═══════ -->
+<h2>Summary</h2>
+<div class="card" style="border-left:3px solid var(--green)">
+<p><span class="score" style="color:var(--red)">A1 avg 0.17</span> &nbsp;&rarr;&nbsp; <span class="score" style="color:var(--green)">A3 avg 0.56</span> &nbsp;&nbsp; <span class="score" style="color:var(--green)">gap +0.39</span></p>
+<p class="dim" style="margin-top:8px">
+<strong>q001:</strong> A1 0.00 → A3 0.70 (+0.70) &mdash; tutorials taught "trim the <em>outer side</em>"<br>
+<strong>q002:</strong> A1 0.70 → A3 0.85 (+0.15) &mdash; tutorials added bonus detail (wheel spinning)<br>
+<strong>q003:</strong> A1 0.00 → A3 0.00 (0.00) &mdash; spiral carving too subtle in tutorials<br>
+<strong>q004:</strong> A1 0.00 → A3 0.70 (+0.70) &mdash; tutorials taught "concentric grooves"
+</p>
+<p class="dim" style="margin-top:8px"><strong>Key insight:</strong> Tutorials significantly helped on 3 of 4 questions. The model learned specific trimming techniques (which part to trim, which pattern to carve) by watching silent tutorial videos &mdash; knowledge that cannot be guessed from the target video alone.</p>
+</div>
+
+<!-- Pipeline -->
+<h2>How these questions were generated</h2>
+<div class="card">
+<p><strong>Visual Predict Pipeline</strong> &mdash; no audio, no transcription, purely visual:</p>
+<ol style="font-size:13.5px;color:var(--muted);padding-left:20px;line-height:1.8">
+<li><strong>VL catalogues tutorials</strong> (doubao-seed-2.1-turbo) &mdash; watches each tutorial video, logs the operation sequence</li>
+<li><strong>DS distils visual rules</strong> (DeepSeek-V4-Flash) &mdash; from 180 operations across 6 tutorials, extracts 53 if-then rules; 33 excluded for preference splits</li>
+<li><strong>DS finds decision points</strong> &mdash; scans 65 shot boundaries for moments where the next step requires tutorial knowledge → 19 cutoffs</li>
+<li><strong>VL sees cut point + DS writes question</strong> &mdash; three-tier answer: core (all tutorials agree), bonus (some teach), ignored (tutorials disagree)</li>
+<li><strong>Screening</strong> &mdash; audit (4 checks) → cross-tutorial consistency → A0 hobbyist filter → VL verify: 11 → <strong>4 questions</strong></li>
+</ol>
+</div>
+
+<div class="note">
+<strong>Soft scoring:</strong> instead of binary right/wrong, answers are graded on a 0–1 scale. Core elements (tool type, action) carry 70% of the score. Bonus elements (technique detail) carry 30%. Details where tutorials disagree (e.g., trimming direction) are ignored entirely.
+</div>
+
+<div style="text-align:center;padding:20px 0;color:var(--dim);font-size:12px">
+self-improve-bench &middot; visual predict pipeline &middot; pottery domain &middot; run05
+</div>
+
+</div>
+</body>
+</html>
